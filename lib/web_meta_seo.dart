@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:html';
 import 'dart:js' as js;
 
 // ignore_for_file: avoid_web_libraries_in_flutter
+import 'package:crypto/crypto.dart';
 import 'package:meta_seo/meta_seo.dart';
 
 /// Code starts here
@@ -80,6 +82,21 @@ class WebMetaSEO implements MetaSEO {
       }
     }
 
+    // Retrieve the stored page title from localStorage
+    // Retrieve the stored page title from localStorage
+    window.onLoad.listen((_) {
+      // Retrieve the stored page title from localStorage
+      String? storedTitle = window.localStorage['pt'];
+
+      // If a title is stored, set it as the initial title
+      if (storedTitle != null && storedTitle.isNotEmpty) {
+        // Set it as the document title without notifying the user
+        document.title = storedTitle;
+        // Call the JavaScript function with the stored title
+        js.context.callMethod('seoNameJS', ['title', storedTitle]);
+      }
+    });
+
     /// Add new or replace the javascript needed functions to the end
     /// of the body of the html document
     document.body!.insertAdjacentElement('beforeEnd', script);
@@ -154,9 +171,9 @@ class WebMetaSEO implements MetaSEO {
   }
 
   /// Definition of [title] meta tag attribute
-  /// https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/The_head_metadata_in_HTML#adding_an_author_and_description
+  /// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title
   /// Add web mata data of [title] attribute
-  /// Example: String? author = 'Eng Mouaz M AlShahmeh';
+  /// Example: String? title = 'Home page';
   /// Implement the interface
   @override
   title(
@@ -164,8 +181,10 @@ class WebMetaSEO implements MetaSEO {
       /// Definition of [author] meta tag attribute
       required String title}) {
     /// Call the javascript function with needed attributes
-    document.title = title;
-    js.context.callMethod('seoNameJS', ['title', title]);
+    window.localStorage['pt'] = title;
+    var docTitle = document.title = title;
+
+    js.context.callMethod('seoNameJS', ['title', docTitle]);
   }
 
   /// Definition of [description] meta tag attribute
