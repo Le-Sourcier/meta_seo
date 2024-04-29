@@ -1,9 +1,7 @@
-import 'dart:convert';
 import 'dart:html';
 import 'dart:js' as js;
 
 // ignore_for_file: avoid_web_libraries_in_flutter
-import 'package:crypto/crypto.dart';
 import 'package:meta_seo/meta_seo.dart';
 
 /// Code starts here
