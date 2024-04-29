@@ -38,6 +38,7 @@ class MyHomePage extends StatelessWidget {
       // Define MetaSEO object
       MetaSEO meta = MetaSEO();
       // Add meta seo data for web app as you want
+      meta.title(title: 'Home page');
       meta.author(author: 'Eng Mouaz M AlShahmeh');
       meta.description(description: 'Meta SEO Web Example');
       meta.keywords(keywords: 'Flutter, Dart, SEO, Meta, Web');
